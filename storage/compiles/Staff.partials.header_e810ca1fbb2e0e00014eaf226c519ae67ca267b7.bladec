@@ -12,15 +12,15 @@
  <li class="onhover-dropdown">
  <a href="#" class="notification-box position-relative">
  <i class="bi bi-bell fs-5"></i>
- <span class="badge rounded-pill bg-primary position-absolute">4</span>
+ <span class="badge rounded-pill bg-primary position-absolute">0</span>
  </a>
  <ul class="notification-dropdown">
  <li class="fw-bold"><i class="bi bi-bell me-2"></i> Notifications</li>
- <li><i class="bi bi-circle-fill text-primary me-2"></i>Delivery processing <span class="float-end">10 min</span></li>
+ <?php /* <li><i class="bi bi-circle-fill text-primary me-2"></i>Delivery processing <span class="float-end">10 min</span></li>
  <li><i class="bi bi-circle-fill text-success me-2"></i>Order Complete <span class="float-end">1 hr</span></li>
  <li><i class="bi bi-circle-fill text-info me-2"></i>Tickets Generated <span class="float-end">3 hr</span></li>
  <li><i class="bi bi-circle-fill text-danger me-2"></i>Delivery Complete <span class="float-end">6 hr</span></li>
- <li><a class="btn btn-primary btn-sm w-100 mt-2" href="#">Check all notifications</a></li>
+ <li><a class="btn btn-primary btn-sm w-100 mt-2" href="#">Check all notifications</a></li> */ ?>
  </ul>
  </li>
 
@@ -32,12 +32,12 @@
  <a href="#" class="profile-media d-flex align-items-center">
  <i class="bi bi-person-circle fs-4"></i>
  <div class="user-name-hide ms-2">
- <span>Emay Walter</span>
+ <span>Quản trị viên</span>
  <p class="mb-0">Admin <i class="bi bi-caret-down-fill"></i></p>
  </div>
  </a>
  <ul class="profile-dropdown">
- <li><a href="#"><i class="bi bi-people me-2"></i> Users</a></li>
+ <?php /* <li><a href="#"><i class="bi bi-people me-2"></i> Users</a></li> */ ?>
  <li><a href="#"><i class="bi bi-archive me-2"></i> Orders</a></li>
  <li><a href="#"><i class="bi bi-telephone me-2"></i> Support Tickets</a></li>
  <li><a href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>

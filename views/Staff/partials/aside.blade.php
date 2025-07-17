@@ -1,25 +1,25 @@
 <aside class="p-0 mb-4 shadow-sm rounded" style="background: linear-gradient(135deg, #185a9d 0%, #43cea2 100%); min-height: 100vh;">
     <div class="text-center py-4">
-        <span class="fw-bold fs-3 text-white" style="text-shadow:0 2px 8px #185a9d;">Fastkart.</span>
+        <span class="fw-bold fs-3 text-white" style="text-shadow:0 2px 8px #185a9d;">Trang quản trị</span>
     </div>
     <ul class="nav flex-column px-2">
         <li class="nav-item mb-2">
-            <a class="nav-link d-flex align-items-center gap-2 text-white fw-semibold" style="text-shadow:0 1px 4px #185a9d;" href="{{ route('home') }}">
+            <a class="nav-link d-flex align-items-center gap-2 text-white fw-semibold" style="text-shadow:0 1px 4px #185a9d;" href="{{ route('staff/products') }}">
                 <span class="fs-5"><i class="bi bi-bar-chart-fill"></i></span> Dashboard
             </a>
         </li>
         <li class="nav-item mb-2">
-            <a class="nav-link d-flex align-items-center gap-2 text-white" style="text-shadow:0 1px 4px #185a9d;" href="{{ route('products') }}">
+            <a class="nav-link d-flex align-items-center gap-2 text-white" style="text-shadow:0 1px 4px #185a9d;" href="{{ route('staff/products') }}">
                 <span class="fs-5"><i class="bi bi-box-seam"></i></span> Sản phẩm
             </a>
         </li>
         <li class="nav-item mb-2">
-            <a class="nav-link d-flex align-items-center gap-2 text-white" style="text-shadow:0 1px 4px #185a9d;" href="{{ route('categories') }}">
+            <a class="nav-link d-flex align-items-center gap-2 text-white" style="text-shadow:0 1px 4px #185a9d;" href="{{ route('staff/categories') }}">
                 <span class="fs-5"><i class="bi bi-tags-fill"></i></span> Danh mục Sản phẩm
             </a>
         </li>
         <li class="nav-item mb-2">
-            <a class="nav-link d-flex align-items-center gap-2 text-white" style="text-shadow:0 1px 4px #185a9d;" href="{{ route('users') }}">
+            <a class="nav-link d-flex align-items-center gap-2 text-white" style="text-shadow:0 1px 4px #185a9d;" href="{{ route('staff/users') }}">
                 <span class="fs-5"><i class="bi bi-people-fill"></i></span> Người dùng
             </a>
         </li>

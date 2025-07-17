@@ -12,7 +12,7 @@
 <body>
 
     {{-- Header --}}
-    @include('partials.header')
+    @include('Staff.partials.header')
 
     {{-- Main layout --}}
     <div class="container-fluid">
@@ -20,7 +20,7 @@
 
             {{-- Sidebar chiếm 2/12 --}}
             <div class="col-md-2 bg-light min-vh-100 p-3 border-end">
-                @include('partials.aside')
+                @include('Staff.partials.aside')
             </div>
 
             {{-- Nội dung chính chiếm 10/12 --}}
@@ -33,7 +33,7 @@
 
     {{-- Footer --}}
     <div class="bg-dark text-white text-center py-3 mt-4">
-        @include('partials.footer')
+        @include('Staff.partials.footer')
     </div>
 
 </body>
