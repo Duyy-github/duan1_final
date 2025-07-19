@@ -20,7 +20,7 @@
                     <p class="card-text mb-2"><strong>Danh mục:</strong> {{ $product['category_name'] ?? 'Không có' }}</p>
                     <p class="card-text mb-2"><strong>Ngày nhập:</strong> {{ $product['import_date'] }}</p>
                     <p class="card-text mb-2"><strong>Mô tả:</strong> {{ $product['description'] }}</p>
-                    <a href="{{ route('products') }}" class="btn btn-secondary mt-3">
+                    <a href="{{ route('staff/products') }}" class="btn btn-secondary mt-3">
                         <i class="bi bi-arrow-left"></i> Quay lại danh sách
                     </a>
                 </div>

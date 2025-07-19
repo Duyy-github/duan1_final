@@ -14,7 +14,7 @@
     @endphp
 
     <div class="mb-3 text-end">
-        <a href="{{ route('products/create') }}" class="btn btn-primary">
+        <a href="{{ route('staff/products/create') }}" class="btn btn-primary">
             <i class="bi bi-plus-circle"></i> Thêm sản phẩm
         </a>
     </div>
@@ -49,13 +49,13 @@
                     <td>{{ $product['import_date'] }}</td>
                     <td>{{ $product['quantity'] }}</td>
                     <td>
-                        <a href="{{ route('products/show/' . $product['product_id']) }}" class="btn btn-sm btn-info me-1">
+                        <a href="{{ route('staff/products/show/' . $product['product_id']) }}" class="btn btn-sm btn-info me-1">
                             <i class="bi bi-eye"></i> Xem
                         </a>
-                        <a href="{{ route('products/edit/' . $product['product_id']) }}" class="btn btn-sm btn-danger me-1">
+                        <a href="{{ route('staff/products/edit/' . $product['product_id']) }}" class="btn btn-sm btn-danger me-1">
                             <i class="bi bi-pencil-square"></i> Sửa
                         </a>
-                        <form action="{{ route('products/' . $product['product_id'] . '/destroy') }}" method="POST"
+                        <form action="{{ route('staff/products/' . $product['product_id'] . '/destroy') }}" method="POST"
                             onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')" style="display:inline-block;">
                             @csrf
                             <button class="btn btn-sm btn-warning me-1" type="submit">
