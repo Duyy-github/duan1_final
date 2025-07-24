@@ -2,6 +2,7 @@
 use App\Controllers\HomeController;
 use App\Controllers\ProductController;
 use App\Controllers\StaffController;
+use App\Controllers\CategoryController;
 use Bramus\Router\Router;
 
 $router = new Router();
@@ -23,7 +24,12 @@ $router->mount('/staff', function() use ($router) {
     $router->post('/products/store',      ProductController::class . '@store');
     $router->get('/products/edit/{id}',      ProductController::class . '@edit');
     $router->post('/products/update/{id}', ProductController::class . '@update');
-    $router->post('/products/{id}/destroy', ProductController::class . '@destroy');
+    $router->post('/products/destroy/{id}', ProductController::class . '@destroy');
 
+
+    $router->get('/categories', CategoryController::class . '@index');
+    $router->get('/categories/create', CategoryController::class . '@create');
+    $router->post('/categories/store', CategoryController::class . '@store');
+    $router->post('/categories/destroy/{id}', CategoryController::class . '@destroy');
 });
 $router->run();
