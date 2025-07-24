@@ -1,7 +1,7 @@
 <?php $_shouldextend[1]=1; ?>
 
 <?php $this->startSection('content'); ?>
- <h1>Danh sach danh muc</h1>
+ <h1>Danh sách danh mục</h1>
 
  <?php 
  if(!empty($_SESSION['flash']))

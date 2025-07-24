@@ -1,7 +1,7 @@
 @extends('Staff.layouts.admin')
 
 @section('content')
-    <h1>Danh sach danh muc</h1>
+    <h1>Danh sách danh mục</h1>
 
      @php
     if(!empty($_SESSION['flash']))
