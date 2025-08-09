@@ -33,7 +33,8 @@ class Controller
         $fileTmpPath = $file['tmp_name']; // Đường dẫn tạm thời của file
         $fileName = time() . '-' . $file['name']; // Tên file chống trùng bằng timestamp
 
-        $uploadDir = 'storage/uploads/' . $folder . '/';
+        // $uploadDir = 'storage/uploads/' . $folder . '/';
+            $uploadDir = __DIR__ . '/../../storage/uploads/' . $folder . '/';
 
         // Tạo thư mục nếu chưa tồn tại
         if (!is_dir($uploadDir)) {
@@ -45,7 +46,7 @@ class Controller
 
         // Di chuyển file từ thư mục tạm thời đến thư mục đích
         if (move_uploaded_file($fileTmpPath, $destPath)) {
-            return $destPath;
+            return 'uploads/' . $folder . '/' . $fileName;
         }
 
         throw new \Exception('Lỗi upload file!');

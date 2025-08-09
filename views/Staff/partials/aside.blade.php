@@ -23,6 +23,11 @@
                 <span class="fs-5"><i class="bi bi-people-fill"></i></span> Người dùng
             </a>
         </li>
+        <li class="nav-item mb-2">
+            <a class="nav-link d-flex align-items-center gap-2 text-white" style="text-shadow:0 1px 4px #185a9d;" href="{{ route('staff/orders') }}">
+                <span class="fs-5"><i class="bi bi-people-fill"></i></span> Danh sách đơn hàng
+            </a>
+        </li>
     </ul>
 </aside>
 

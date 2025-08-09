@@ -118,8 +118,7 @@ if (!function_exists('random_string')) {
     }
 }
 
-if (!function_exists('route')) 
-{
+if (!function_exists('route')) {
     function route($path)
     {
         return $_ENV['APP_URL'] . $path;
@@ -133,5 +132,14 @@ if (!function_exists('setFlash')) {
             session_start();
         }
         $_SESSION['flash'][$key] = $message;
+    }
+}
+
+if (!function_exists('asset')) {
+    function asset($path = '') {
+        if (strpos($path, 'uploads/') === 0) {
+            return '/duan1_final/' . $path; 
+        }
+        return '/duan1_final/storage/uploads/products/' . ltrim($path, '/');
     }
 }

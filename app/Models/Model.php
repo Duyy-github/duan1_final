@@ -8,6 +8,7 @@ use Doctrine\DBAL\Exception;
 class Model
 {
     protected $connection;
+    protected $table;
 
     public function __construct()
     {
@@ -30,5 +31,14 @@ class Model
     public function __destruct()
     {
         $this->connection = null;
+    }
+    public function insert($data)
+    {
+        try {
+            $this->connection->insert($this->table, $data);
+            return $this->connection->lastInsertId();
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }

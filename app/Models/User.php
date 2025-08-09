@@ -4,6 +4,7 @@ use App\Models\Model;
 
 class User extends Model
 {
+    protected $table = 'users';
     public function getAll()
     {
         $query = $this->connection->createQueryBuilder()
@@ -35,5 +36,21 @@ class User extends Model
             ->setParameter('id', $id);
 
         return $query->executeStatement();
+    }
+    //xử lý đăng nhập
+    public function findByEmail($email)
+    {
+        $query = $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from('users')
+            ->where('email = :email')
+            ->setParameter('email', $email);
+
+        return $query->fetchAssociative();
+    }
+
+    public function createUser($data)
+    {
+        return $this->insert($data);
     }
 }

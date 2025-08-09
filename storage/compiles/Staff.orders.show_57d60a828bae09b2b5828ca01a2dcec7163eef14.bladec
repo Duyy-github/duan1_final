@@ -1,0 +1,112 @@
+<?php $_shouldextend[1]=1; ?>
+
+<?php $this->startSection('content'); ?>
+ <h1>Chi tiết đơn hàng #<?php echo \htmlentities($order['order_id'] ?? 'N/A'??'', ENT_QUOTES, 'UTF-8', false); ?></h1>
+
+ <?php /* Hiển thị thông báo lỗi hoặc thành công */ ?>
+ <?php 
+ if (!empty($_SESSION['flash'])) {
+ foreach ($_SESSION['flash'] as $type => $msg) {
+ echo "<div class='alert alert-$type'>$msg</div>";
+ }
+ unset($_SESSION['flash']);
+ }
+ ?>
+
+ <?php if($order): ?>
+ <?php /* Thông tin đơn hàng */ ?>
+ <div class="card mb-4">
+ <div class="card-header fw-bold">Thông tin đơn hàng</div>
+ <div class="card-body">
+ <p><strong>Ngày đặt:</strong> <?php echo \htmlentities($order['order_date'] ?? 'N/A'??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p><strong>Tổng tiền:</strong> <?php echo \htmlentities(number_format($order['total_amount'] ?? 0, 0, '', ',')??'', ENT_QUOTES, 'UTF-8', false); ?> đ</p>
+ <p><strong>Trạng thái hiện tại:</strong>
+ <?php 
+ $statusLabels = [
+ 'pending' => 'Chờ xử lý',
+ 'processing' => 'Đang xử lý',
+ 'delivering' => 'Đang giao',
+ 'delivered' => 'Đã giao',
+ 'cancelled' => 'Đã hủy',
+ 'returned' => 'Hoàn hàng',
+ ];
+ echo $statusLabels[$order['status']] ?? $order['status'];
+ ?>
+ </p>
+ <p><strong>Số điện thoại:</strong> <?php echo \htmlentities($order['phone_number'] ?? 'N/A'??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p><strong>Địa chỉ:</strong> <?php echo \htmlentities($order['address'] ?? 'N/A'??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p><strong>Người nhận:</strong> <?php echo \htmlentities($order['receiver_name'] ?? 'N/A'??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ </div>
+ </div>
+
+ <?php /* Chi tiết sản phẩm */ ?>
+ <div class="card mb-4">
+ <div class="card-header fw-bold">Chi tiết sản phẩm</div>
+ <div class="card-body">
+ <?php if($orderDetails && count($orderDetails) > 0): ?>
+ <?php $__currentLoopData = $orderDetails; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $detail): $loop = $this->incrementLoopIndices();  ?>
+ <div class="d-flex align-items-center mb-3">
+ <div class="flex-grow-1">
+ <div class="fw-bold"><?php echo \htmlentities($detail['product_name'] ?? 'Không có tên'??'', ENT_QUOTES, 'UTF-8', false); ?></div>
+ <div class="text-muted small">Số lượng: <?php echo \htmlentities($detail['quantity'] ?? 0??'', ENT_QUOTES, 'UTF-8', false); ?></div>
+ <div class="text-muted small">Đơn giá: <?php echo \htmlentities(number_format($detail['unit_price'] ?? 0, 0, '', ',')??'', ENT_QUOTES, 'UTF-8', false); ?> đ</div>
+ </div>
+ <div class="text-end">
+ <div class="fw-bold text-danger">
+ <?php echo \htmlentities(number_format(($detail['unit_price'] ?? 0) * ($detail['quantity'] ?? 0), 0, '', ',')??'', ENT_QUOTES, 'UTF-8', false); ?> đ
+ </div>
+ </div>
+ </div>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ <?php else: ?>
+ <p>Không có sản phẩm trong đơn hàng.</p>
+ <?php endif; ?>
+ </div>
+ </div>
+
+ <?php /* Form thay đổi trạng thái */ ?>
+ <?php 
+ // Danh sách trạng thái theo thứ tự xử lý
+ $statusOptions = [
+ 'pending' => 'Chờ xử lý',
+ 'processing' => 'Đang xử lý',
+ 'delivering' => 'Đang giao',
+ 'delivered' => 'Đã giao',
+ 'cancelled' => 'Đã hủy',
+ 'returned' => 'Hoàn hàng',
+ ];
+
+ $statusKeys = array_keys($statusOptions);
+ $currentStatus = $order['status'];
+ $currentIndex = array_search($currentStatus, $statusKeys);
+ ?>
+
+ <form action="<?php echo \htmlentities(route('staff/orders/updateStatus')??'', ENT_QUOTES, 'UTF-8', false); ?>" method="POST" class="mb-4">
+ <input type='hidden' name='<?php  echo '_token'; ?>' value='<?php echo $this->csrf_token; ?>'/>
+ <input type="hidden" name="order_id" value="<?php echo \htmlentities($order['order_id'] ?? ''??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <div class="mb-3">
+ <label for="status" class="form-label">Chọn trạng thái mới</label>
+
+ <select name="status" id="status" class="form-select" required
+ <?php echo \htmlentities($currentIndex >= count($statusKeys) - 1 ? 'disabled' : ''??'', ENT_QUOTES, 'UTF-8', false); ?>>
+ <?php for($i = $currentIndex + 1; $i < count($statusKeys); $i++): ?>
+ <option value="<?php echo \htmlentities($statusKeys[$i]??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($statusOptions[$statusKeys[$i]]??'', ENT_QUOTES, 'UTF-8', false); ?></option>
+ <?php endfor; ?>
+ </select>
+ </div>
+
+ <?php if($currentIndex < count($statusKeys) - 1): ?>
+ <button type="submit" class="btn btn-primary">Thay đổi trạng thái</button>
+ <?php else: ?>
+ <div class="alert alert-info">Đơn hàng đã ở trạng thái cuối cùng, không thể thay đổi thêm.</div>
+ <?php endif; ?>
+ </form>
+
+ <a href="<?php echo \htmlentities(route('staff/orders')??'', ENT_QUOTES, 'UTF-8', false); ?>" class="btn btn-secondary">Quay lại</a>
+ <?php else: ?>
+ <div class="alert alert-warning">Không tìm thấy đơn hàng.</div>
+ <?php endif; ?>
+<?php $this->stopSection(); ?>
+
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('Staff.layouts.admin'); } ?>

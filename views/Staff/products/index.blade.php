@@ -38,7 +38,8 @@
                     <td>{{ $index + 1 }}</td>
                     <td>
                         @if ($product['image'])
-                            <img src="{{ $product['image'] }}" alt="{{ $product['product_name'] }}" class="img-thumbnail" style="max-width: 80px;">
+                            <img src="{{ asset($product['image']) }}" alt="{{ $product['product_name'] }}" class="img-thumbnail"
+                                style="max-width: 80px;">
                         @else
                             <small>No image</small>
                         @endif
@@ -52,7 +53,8 @@
                         <a href="{{ route('staff/products/show/' . $product['product_id']) }}" class="btn btn-sm btn-info me-1">
                             <i class="bi bi-eye"></i> Xem
                         </a>
-                        <a href="{{ route('staff/products/edit/' . $product['product_id']) }}" class="btn btn-sm btn-danger me-1">
+                        <a href="{{ route('staff/products/edit/' . $product['product_id']) }}"
+                            class="btn btn-sm btn-danger me-1">
                             <i class="bi bi-pencil-square"></i> Sửa
                         </a>
                         <form action="{{ route('staff/products/' . 'destroy/' . $product['product_id']) }}" method="POST"
