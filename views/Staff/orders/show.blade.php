@@ -27,9 +27,9 @@
                             'processing' => 'Đang xử lý',
                             'delivering' => 'Đang giao',
                             'delivered' => 'Đã giao',
-                            'completed' => 'Đã hoàn thành',
-                            'cancelled' => 'Đã hủy',
-                            'returned' => 'Hoàn hàng',
+                            // 'completed' => 'Đã hoàn thành',
+                            // 'cancelled' => 'Đã hủy',
+                            // 'returned' => 'Hoàn hàng',
                         ];
                         echo $statusLabels[$order['status']] ?? $order['status'];
                     @endphp
@@ -73,9 +73,9 @@
                 'processing' => 'Đang xử lý',
                 'delivering' => 'Đang giao',
                 'delivered' => 'Đã giao',
-                'completed' => 'Đã hoàn thành',
+                // 'completed' => 'Đã hoàn thành',
                 'cancelled' => 'Đã hủy',
-                'returned' => 'Hoàn hàng',
+                // 'returned' => 'Hoàn hàng',
             ];
 
             $statusKeys = array_keys($statusOptions);

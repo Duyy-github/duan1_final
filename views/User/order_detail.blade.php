@@ -10,7 +10,6 @@
             Không tìm thấy đơn hàng.
         </div>
     @else
-        <!-- Thông tin đơn hàng -->
         <div class="card mb-4">
             <div class="card-body">
                 <h5>Đơn hàng #{{ $order['order_id'] }}</h5>
@@ -44,7 +43,6 @@
                     <span class="badge bg-{{ $statusClass }}">{{ $statusMap[$order['status']] ?? ucfirst($order['status']) }}</span>
                 </p>
 
-                <!-- Nút hủy đơn -->
                 @if(in_array($order['status'], ['pending', 'processing']))
                     <form action="{{ route('user/orders/cancel/' . $order['order_id']) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn hủy đơn hàng này?');">
                         @csrf
@@ -55,7 +53,6 @@
                     </form>
                 @endif
 
-                <!-- Nút đã nhận được hàng -->
                 @if($order['status'] === 'delivering')
                     <form action="{{ route('user/orders/receive/' . $order['order_id']) }}" method="POST" onsubmit="return confirm('Bạn đã nhận được hàng?');">
                         @csrf
@@ -64,10 +61,39 @@
                         </button>
                     </form>
                 @endif
+
+                <!-- Nút hoàn thành đơn hàng -->
+                @if($order['status'] === 'delivered')
+                    <form action="{{ route('user/orders/complete/' . $order['order_id']) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn hoàn thành đơn hàng này?');">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-success mt-2">
+                            <i class="bi bi-check-circle"></i> Hoàn thành đơn hàng
+                        </button>
+                    </form>
+                @endif
+
+                {{-- trả hàng? --}}
+                @if($order['status'] === 'delivered')
+                    <form action="{{ route('user/orders/return/' . $order['order_id']) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn yêu cầu trả hàng?');">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-warning mt-2">
+                            <i class="bi bi-arrow-return-left"></i> Yêu cầu trả hàng
+                        </button>
+                    </form>
+                @endif
+
+                {{-- @if($order['status'] === 'cancelled')
+                    <form action="{{ route('user/orders/delete/' . $order['order_id']) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa đơn hàng này?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger mt-2">
+                            <i class="bi bi-trash-fill"></i> Xóa đơn hàng
+                        </button>
+                    </form>
+                @endif --}}
             </div>
         </div>
 
-        <!-- Chi tiết sản phẩm trong đơn hàng -->
         @if(empty($details) || count($details) === 0)
             <div class="text-center text-muted py-5">
                 <i class="bi bi-box-seam" style="font-size: 2rem;"></i><br>

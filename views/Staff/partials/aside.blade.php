@@ -25,7 +25,12 @@
         </li>
         <li class="nav-item mb-2">
             <a class="nav-link d-flex align-items-center gap-2 text-white" style="text-shadow:0 1px 4px #185a9d;" href="{{ route('staff/orders') }}">
-                <span class="fs-5"><i class="bi bi-people-fill"></i></span> Danh sách đơn hàng
+                <span class="fs-5"><i class="bi bi-bag-check-fill"></i></span> Danh sách đơn hàng
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="nav-link d-flex align-items-center gap-2 text-white" style="text-shadow:0 1px 4px #185a9d;" href="{{ route('staff/promotions') }}">
+                <span class="fs-5"><i class="bi bi-ticket-perforated-fill"></i></span> Quản lý mã giảm giá
             </a>
         </li>
     </ul>

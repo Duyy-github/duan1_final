@@ -47,7 +47,7 @@
                     </li>
                     <li class="nav-item">
                         <span class="nav-link">
-                            👋 Xin chào, {{ $_SESSION['user']['username'] }}
+                            👋 Xin chào, {{ $_SESSION['user']['name'] }}
                         </span>
                     </li>
                     <li class="nav-item">

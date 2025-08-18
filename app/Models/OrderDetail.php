@@ -32,4 +32,8 @@ class OrderDetail extends Model
 
         return $query->fetchAllAssociative();
     }
+    // public function deleteByOrderId($orderId)
+    // {
+    //     return $this->connection->delete($this->table, ['order_id' => $orderId]);
+    // }
 }

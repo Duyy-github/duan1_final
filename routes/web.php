@@ -5,6 +5,7 @@ use App\Controllers\HomeController;
 use App\Controllers\OrderController;
 use App\Controllers\PaymentController;
 use App\Controllers\ProductController;
+use App\Controllers\PromotionController;
 use App\Controllers\StaffController;
 use App\Controllers\CategoryController;
 use App\Controllers\UserController;
@@ -44,11 +45,18 @@ $router->mount('/staff', function () use ($router) {
     $router->get('/orders', OrderController::class . '@index');
     $router->get('/orders/show/{id}', OrderController::class . '@show');
     $router->post('/orders/updateStatus', OrderController::class . '@updateStatus');
+
+    $router->get('/promotions', PromotionController::class . '@index');
+    $router->get('/promotions/create', PromotionController::class . '@create');
+    $router->post('/promotions/store', PromotionController::class . '@store');
+    $router->post('/promotions/destroy/{id}', PromotionController::class . '@destroy');
+    $router->get('/promotions/{id}', PromotionController::class . '@show');
 });
 
 
 $router->mount('/user', function () use ($router) {
     $router->get('/', HomeController::class . '@index');
+    $router->get('/products', HomeController::class . '@index');
     $router->get('/products/show/{id}', HomeController::class . '@showProduct');
     $router->get('/cart', CartController::class . '@index');
     $router->post('/cart/add/{id}', CartController::class . '@add');
@@ -61,7 +69,9 @@ $router->mount('/user', function () use ($router) {
     $router->get('/orders/show/{orderId}', UserOrderController::class . '@show');
     $router->post('/orders/cancel/{id}', UserOrderController::class . '@cancel');
     $router->post('/orders/receive/{id}', UserOrderController::class . '@markAsReceived');
-
+    $router->post('/orders/return/{id}', UserOrderController::class . '@returnOrder');
+    $router->post('/orders/delete/{id}', UserOrderController::class . '@delete');
+    $router->post('/orders/complete/{id}', UserOrderController::class . '@complete');
 });
 
 $router->get('/login', AuthController::class . '@showLoginForm');

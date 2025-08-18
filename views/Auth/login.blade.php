@@ -4,10 +4,56 @@
     <meta charset="UTF-8">
     <title>Đăng nhập</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('https://cdn5.f-cdn.com/contestentries/1578585/21468461/5d62b49ac544b_thumb900.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 350px;
+            margin: 100px auto;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+        }
+        .login-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #8B2E2E;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn-login {
+            background-color: #8B2E2E;
+            color: white;
+            border: none;
+        }
+        .btn-login:hover {
+            background-color: #a94442;
+        }
+        .login-links {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        .login-links a {
+            text-decoration: none;
+            color: #8B2E2E;
+        }
+        .form-control {
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5" style="max-width: 500px;">
-    <h2 class="mb-4">Đăng nhập</h2>
+
+<div class="login-container">
+    <div class="login-title">Đăng nhập</div>
 
     @php
         if (!empty($_SESSION['flash'])) {
@@ -20,16 +66,19 @@
 
     <form action="{{ route('login') }}" method="POST">
         <div class="mb-3">
-            <label for="email" class="form-label">Địa chỉ email</label>
-            <input type="email" class="form-control" name="email" required value="{{ $_POST['email'] ?? '' }}">
+            <input type="text" class="form-control" name="email" placeholder="Email" required value="{{ $_POST['email'] ?? '' }}">
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">Mật khẩu</label>
-            <input type="password" class="form-control" name="password" required>
+            <input type="password" class="form-control" name="password" placeholder="Mật khẩu" required>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+        <button type="submit" class="btn btn-login w-100">Đăng nhập</button>
     </form>
-    <p class="mt-3 text-center">Chưa có tài khoản? <a href="{{ route('register') }}">Đăng ký</a></p>
+
+    <div class="login-links mt-3">
+        <a href="#">Quên mật khẩu?</a>
+        <a href="{{ route('register') }}">Đăng ký</a>
+    </div>
 </div>
+
 </body>
 </html>

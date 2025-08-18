@@ -68,4 +68,8 @@ class Order extends Model
     {
         return $this->connection->update($this->table, $data, ['order_id' => $id]);
     }
+    // public function delete($id)
+    // {
+    //     return $this->connection->delete($this->table, ['order_id' => $id]);
+    // }
 }

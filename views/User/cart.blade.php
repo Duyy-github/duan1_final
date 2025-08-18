@@ -7,6 +7,15 @@
             exit;
         }
     @endphp
+
+    @if(isset($_SESSION['error']) && $_SESSION['error'] !== '')
+        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            {{ $_SESSION['error'] }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        @php unset($_SESSION['error']); @endphp
+    @endif
+    
     <div class="container py-4">
         <h2 class="mb-4"><i class="bi bi-cart"></i> Giỏ Hàng</h2>
         @if(isset($_SESSION['error']))
@@ -43,9 +52,6 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{-- <span
-                                        class="text-decoration-line-through text-muted me-2">{{ number_format($item['old_price'] ?? 0, 0, '', ',') }}
-                                        đ</span> --}}
                                     <span class="fw-bold text-danger">{{ number_format($item['price'], 0, '', ',') }} đ</span>
                                 </td>
                                 <td>
@@ -139,31 +145,5 @@
                 input.value = value;
             });
         });
-
-        // Kiểm tra số lượng khi nhập
-        document.querySelectorAll('input[name^="quantities"]').forEach(input => {
-            input.addEventListener('input', function () {
-                const max = parseInt(this.dataset.max);
-                if (parseInt(this.value) > max) {
-                    alert('Số lượng trong kho không đủ!');
-                    this.value = max;
-                }
-            });
-        });
-
-        // Kiểm tra khi submit form
-        document.querySelector('form').addEventListener('submit', function (e) {
-            let valid = true;
-            document.querySelectorAll('input[name^="quantities"]').forEach(input => {
-                const max = parseInt(input.dataset.max);
-                if (parseInt(input.value) > max) {
-                    alert('Số lượng trong kho không đủ!');
-                    input.value = max;
-                    valid = false;
-                }
-            });
-            if (!valid) e.preventDefault();
-        });
-
     </script>
 @endpush

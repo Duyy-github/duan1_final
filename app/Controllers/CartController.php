@@ -39,7 +39,7 @@ class CartController
         </script>";
             exit;
         }
-        
+
         $product = (new Product())->findById($id);
         if (!$product) {
             header('Location: /duan1_final/user');
@@ -81,6 +81,13 @@ class CartController
     {
         // Xử lý khi bấm "Thanh toán"
         if (isset($_POST['action']) && $_POST['action'] === 'checkout') {
+            // Kiểm tra giỏ hàng có sản phẩm không
+            if (empty($_SESSION['cart'])) {
+                $_SESSION['error'] = 'Giỏ hàng của bạn hiện tại không có sản phẩm. Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.';
+                header('Location: ' . route('user/cart'));
+                exit;
+            }
+            // Nếu giỏ hàng có sản phẩm, điều hướng đến trang thanh toán
             header('Location: ' . route('user/payment'));
             exit;
         }

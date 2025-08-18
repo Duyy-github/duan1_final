@@ -61,4 +61,16 @@ class Product extends Model
             'product_id' => $id,
         ]);
     }
+    public function search($keyword)
+    {
+        $query = $this->connection->createQueryBuilder()
+            ->select('p.*', 'c.category_name AS category_name')
+            ->from('products', 'p')
+            ->innerJoin('p', 'categories', 'c', 'p.category_id = c.category_id')
+            ->where('p.product_name LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%')
+            ->orderBy('p.product_id', 'DESC');
+
+        return $query->fetchAllAssociative();
+    }
 }

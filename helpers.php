@@ -136,10 +136,7 @@ if (!function_exists('setFlash')) {
 }
 
 if (!function_exists('asset')) {
-    function asset($path = '') {
-        if (strpos($path, 'uploads/') === 0) {
-            return '/duan1_final/' . $path; 
-        }
-        return '/duan1_final/storage/uploads/products/' . ltrim($path, '/');
+    function asset($path = null) {
+        return '/' . ltrim($path ?? '', '/');
     }
 }
