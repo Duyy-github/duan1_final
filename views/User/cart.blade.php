@@ -15,7 +15,7 @@
         </div>
         @php unset($_SESSION['error']); @endphp
     @endif
-    
+
     <div class="container py-4">
         <h2 class="mb-4"><i class="bi bi-cart"></i> Giỏ Hàng</h2>
         @if(isset($_SESSION['error']))
@@ -43,8 +43,10 @@
                             <tr>
                                 <td><input type="checkbox" name="selected[]" value="{{ $item['product_id'] }}"></td>
                                 <td class="d-flex align-items-center gap-3">
-                                    <img src="{{ asset($item['image']) }}" alt="{{ $item['product_name'] }}"
-                                        style="width:70px;height:70px;object-fit:cover;" class="border rounded">
+                                    {{-- <img src="{{ asset($item['image']) }}" alt="{{ $item['product_name'] }}"
+                                        style="width:70px;height:70px;object-fit:cover;" class="border rounded"> --}}
+                                    <img src="{{ file_url($item['image']) }}" class="card-img-top"
+                                        alt="{{ $item['product_name'] }}" style="width:70px;height:70px;object-fit:cover;" class="border rounded">
                                     <div>
                                         <div class="fw-bold">{{ $item['product_name'] }}</div>
                                         <div class="text-muted small">Phân loại: {{ $item['category_name'] ?? 'Không có' }}
@@ -109,8 +111,10 @@
                 @foreach($suggestedProducts ?? [] as $product)
                     <div class="col-md-2 mb-3">
                         <div class="card h-100">
-                            <img src="{{ asset($product['image']) }}" class="card-img-top" alt="{{ $product['product_name'] }}"
-                                style="height:120px;object-fit:cover;">
+                            {{-- <img src="{{ asset($product['image']) }}" class="card-img-top"
+                                alt="{{ $product['product_name'] }}" style="height:120px;object-fit:cover;"> --}}
+                            <img src="{{ file_url($product['image']) }}" class="card-img-top"
+                                alt="{{ $product['product_name'] }}" style="height:120px;object-fit:cover;">
                             <div class="card-body p-2">
                                 <div class="small">{{ $product['product_name'] }}</div>
                                 <div class="fw-bold text-danger">{{ number_format($product['price'], 0, '', ',') }} đ</div>

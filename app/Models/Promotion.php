@@ -24,16 +24,18 @@ class Promotion extends Model
                 'discount_percentage' => '?',
                 'start_date' => '?',
                 'end_date' => '?',
+                'apply_type' => '?',
                 'product_id' => '?'
             ])
             ->setParameter(0, $data['name'])
             ->setParameter(1, $data['discount_percentage'])
             ->setParameter(2, $data['start_date'])
             ->setParameter(3, $data['end_date'])
-            ->setParameter(4, $data['product_id'] ?? null);
+            ->setParameter(4, $data['apply_type'])
+            ->setParameter(5, $data['product_id'] ?? null);
+
         return $query->executeStatement();
     }
-
     public function delete($id)
     {
         return $this->connection->delete($this->table, ['promotion_id' => $id]);

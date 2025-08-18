@@ -50,7 +50,8 @@
                             <div class="flex-grow-1">
                                 <div class="fw-bold">{{ $detail['product_name'] ?? 'Không có tên' }}</div>
                                 <div class="text-muted small">Số lượng: {{ $detail['quantity'] ?? 0 }}</div>
-                                <div class="text-muted small">Đơn giá: {{ number_format($detail['unit_price'] ?? 0, 0, '', ',') }} đ</div>
+                                <div class="text-muted small">Đơn giá: {{ number_format($detail['unit_price'] ?? 0, 0, '', ',') }} đ
+                                </div>
                             </div>
                             <div class="text-end">
                                 <div class="fw-bold text-danger">
@@ -73,7 +74,7 @@
                 'processing' => 'Đang xử lý',
                 'delivering' => 'Đang giao',
                 'delivered' => 'Đã giao',
-                // 'completed' => 'Đã hoàn thành',
+                'completed' => 'Đã hoàn thành',
                 'cancelled' => 'Đã hủy',
                 // 'returned' => 'Hoàn hàng',
             ];
@@ -89,11 +90,15 @@
             <div class="mb-3">
                 <label for="status" class="form-label">Chọn trạng thái mới</label>
 
-                <select name="status" id="status" class="form-select" required
-                    {{ $currentIndex >= count($statusKeys) - 1 ? 'disabled' : '' }}>
-                    @for ($i = $currentIndex + 1; $i < count($statusKeys); $i++)
-                        <option value="{{ $statusKeys[$i] }}">{{ $statusOptions[$statusKeys[$i]] }}</option>
-                    @endfor
+                <select name="status" id="status" class="form-select" required {{ in_array($currentStatus, ['cancelled', 'completed']) ? 'disabled' : '' }}>
+                    @if (in_array($currentStatus, ['cancelled', 'completed']))
+                        {{-- Hiển thị trạng thái hiện tại nhưng không cho đổi --}}
+                        <option selected>{{ $statusOptions[$currentStatus] ?? $currentStatus }}</option>
+                    @else
+                        @for ($i = $currentIndex + 1; $i < count($statusKeys); $i++)
+                            <option value="{{ $statusKeys[$i] }}">{{ $statusOptions[$statusKeys[$i]] }}</option>
+                        @endfor
+                    @endif
                 </select>
             </div>
 

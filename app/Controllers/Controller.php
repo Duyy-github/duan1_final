@@ -43,7 +43,7 @@ class Controller
 
         if (move_uploaded_file($fileTmpPath, $destPath)) {
             // Trả về đường dẫn tương đối từ thư mục public
-            return 'uploads/' . $folder . '/' . $fileName;
+            return 'public/uploads/' . $folder . '/' . $fileName;
         }
 
         throw new \Exception('Lỗi upload file!');

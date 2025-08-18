@@ -1,25 +1,26 @@
 <?php
-// theo dõi đơn hàng của người dùng
 namespace App\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
 
 class UserOrderController
 {
     protected $order;
     protected $orderDetail;
+    protected $product;
 
     public function __construct()
     {
         $this->order = new Order();
         $this->orderDetail = new OrderDetail();
+        $this->product = new Product();
     }
 
     // Danh sách đơn hàng của người dùng hiện tại
     public function index()
     {
-
         $userId = $_SESSION['user']['id'] ?? null;
 
         if (!$userId) {
@@ -54,19 +55,17 @@ class UserOrderController
         ]);
     }
 
+    // Hủy đơn hàng
     public function cancel($id)
     {
-        $orderModel = new Order();
-        $order = $orderModel->find($id);
+        $order = $this->order->find($id);
 
-        // Kiểm tra quyền: người dùng chỉ được hủy đơn hàng của chính mình (nếu bạn có user_id)
         if (!$order || $order['user_id'] != $_SESSION['user']['id']) {
             $_SESSION['flash']['danger'] = 'Không tìm thấy đơn hàng hoặc bạn không có quyền.';
             header('Location: ' . route('user/orders'));
             exit;
         }
 
-        // Chỉ được hủy khi đơn hàng đang chờ hoặc đang xử lý
         if (!in_array($order['status'], ['pending', 'processing'])) {
             $_SESSION['flash']['warning'] = 'Không thể hủy đơn hàng ở trạng thái hiện tại.';
             header('Location: ' . route('user/orders/show/' . $id));
@@ -74,7 +73,13 @@ class UserOrderController
         }
 
         // Cập nhật trạng thái thành cancelled
-        $orderModel->update($id, ['status' => 'cancelled']);
+        $this->order->update($id, ['status' => 'cancelled']);
+
+        // Hoàn lại tồn kho
+        $details = $this->orderDetail->getDetailsByOrderId($id);
+        foreach ($details as $detail) {
+            $this->product->increaseStock($detail['product_id'], $detail['quantity']);
+        }
 
         $_SESSION['flash']['success'] = 'Đơn hàng đã được hủy thành công.';
         header('Location: ' . route('user/orders/show/' . $id));
@@ -104,6 +109,8 @@ class UserOrderController
         header('Location: ' . route('user/orders/show/' . $id));
         exit;
     }
+
+    // Trả hàng
     public function returnOrder($id)
     {
         $order = $this->order->find($id);
@@ -122,11 +129,18 @@ class UserOrderController
 
         $this->order->update($id, ['status' => 'returned']);
 
+        // +++ Hoàn lại tồn kho
+        $details = $this->orderDetail->getDetailsByOrderId($id);
+        foreach ($details as $detail) {
+            $this->product->increaseStock($detail['product_id'], $detail['quantity']);
+        }
+
         $_SESSION['flash']['success'] = 'Yêu cầu trả hàng đã được gửi thành công.';
         header('Location: ' . route('user/orders/show/' . $id));
         exit;
     }
 
+    // Hoàn thành đơn hàng
     public function complete($id)
     {
         $order = $this->order->find($id);
@@ -149,31 +163,4 @@ class UserOrderController
         header('Location: ' . route('user/orders/show/' . $id));
         exit;
     }
-
-    // public function delete($id)
-    // {
-    //     $order = $this->order->find($id);
-
-    //     if (!$order || $order['user_id'] != $_SESSION['user']['id']) {
-    //         $_SESSION['flash']['danger'] = 'Không tìm thấy đơn hàng hoặc bạn không có quyền.';
-    //         header('Location: ' . route('user/orders'));
-    //         exit;
-    //     }
-
-    //     if ($order['status'] !== 'cancelled') {
-    //         $_SESSION['flash']['warning'] = 'Chỉ có thể xóa đơn hàng ở trạng thái đã hủy.';
-    //         header('Location: ' . route('user/orders/show/' . $id));
-    //         exit;
-    //     }
-
-    //     // Xóa chi tiết đơn hàng
-    //     $this->orderDetail->deleteByOrderId($id);
-    //     // Xóa đơn hàng
-    //     $this->order->delete($id);
-
-    //     $_SESSION['flash']['success'] = 'Đơn hàng đã được xóa thành công.';
-    //     header('Location: ' . route('user/orders'));
-    //     exit;
-    // }
-
 }

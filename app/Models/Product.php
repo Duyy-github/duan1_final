@@ -73,4 +73,25 @@ class Product extends Model
 
         return $query->fetchAllAssociative();
     }
+
+    //kiểm soát số lượng sản phẩm
+    public function decreaseStock($productId, $qty)
+    {
+        $product = $this->findById($productId);
+        if (!$product)
+            return false;
+
+        $newQty = max(0, $product['quantity'] - $qty); // tránh âm số
+        return $this->connection->update('products', ['quantity' => $newQty], ['product_id' => $productId]);
+    }
+
+    public function increaseStock($productId, $qty)
+    {
+        $product = $this->findById($productId);
+        if (!$product)
+            return false;
+
+        $newQty = $product['quantity'] + $qty;
+        return $this->connection->update('products', ['quantity' => $newQty], ['product_id' => $productId]);
+    }
 }

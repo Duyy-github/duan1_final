@@ -2,7 +2,7 @@
 namespace App\Controllers;
 use App\Models\Product;
 
-class CartController
+class CartController extends Controller
 {
     // Hiển thị giỏ hàng
     public function index()

@@ -14,8 +14,10 @@
             {{-- Ảnh sản phẩm và ảnh nhỏ --}}
             <div class="col-md-5">
                 <div class="mb-3 text-center">
-                    <img src="{{ asset($product['image']) }}" class="img-fluid rounded border"
-                        alt="{{ $product['product_name'] }}" style="max-height:320px;object-fit:contain;">
+                    {{-- <img src="{{ asset($product['image']) }}" class="img-fluid rounded border"
+                        alt="{{ $product['product_name'] }}" style="max-height:320px;object-fit:contain;"> --}}
+                    <img src="{{ file_url($product['image']) }}" class="card-img-top" alt="{{ $product['product_name'] }}"
+                        style="height: 180px; object-fit: cover;">
                 </div>
             </div>
             {{-- Thông tin sản phẩm --}}

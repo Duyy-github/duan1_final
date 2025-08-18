@@ -1,7 +1,9 @@
 <?php
 namespace App\Controllers;
+
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
 
 class PaymentController
 {
@@ -11,6 +13,7 @@ class PaymentController
         $cart = $_SESSION['cart'] ?? [];
         $totalItems = array_sum(array_column($cart, 'quantity'));
         $totalPrice = 0;
+
         foreach ($cart as $item) {
             $totalPrice += $item['price'] * $item['quantity'];
         }
@@ -19,6 +22,8 @@ class PaymentController
             'cart' => $cart,
             'totalItems' => $totalItems,
             'totalPrice' => $totalPrice,
+            'discount' => $_SESSION['discount'] ?? 0,
+            'voucherCode' => $_SESSION['voucherCode'] ?? null,
         ]);
     }
 
@@ -57,8 +62,10 @@ class PaymentController
             'receiver_name' => $_POST['receiver_name']
         ]);
 
-        // Lưu chi tiết đơn hàng
+        // Lưu chi tiết đơn hàng + trừ tồn kho
         $orderDetail = new OrderDetail();
+        $productModel = new Product();
+
         foreach ($cart as $item) {
             $orderDetail->create([
                 'order_id' => $orderId,
@@ -66,6 +73,9 @@ class PaymentController
                 'quantity' => $item['quantity'],
                 'unit_price' => $item['price']
             ]);
+
+            // Trừ tồn kho
+            $productModel->decreaseStock($item['product_id'], $item['quantity']);
         }
 
         // Xóa giỏ hàng sau khi đặt hàng
@@ -74,5 +84,4 @@ class PaymentController
         header('Location: /duan1_final/user');
         exit;
     }
-
 }

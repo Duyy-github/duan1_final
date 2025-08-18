@@ -38,8 +38,8 @@ class PromotionController
             'discount_percentage' => $_POST['discount_percentage'] ?? '',
             'start_date' => $_POST['start_date'] ?? '',
             'end_date' => $_POST['end_date'] ?? '',
-            'apply_type' => $_POST['apply_type'] ?? 'order',  // Lưu kiểu áp dụng (order hoặc product)
-            // 'product_id' => $_POST['product_id'] ?? null  // Nếu apply_type là 'product', lưu product_id
+            'apply_type' => $_POST['apply_type'] ?? 'order',
+            // 'product_id' => $_POST['product_id'] ?? null  
             'product_id' => null
         ];
         if ($data['apply_type'] === 'product') {
@@ -90,7 +90,7 @@ class PromotionController
 
     public function show($id)
     {
-        $promotion = $this->promotion->getByCode($id); // Sử dụng getByCode tạm thời, cần điều chỉnh nếu dùng promotion_id
+        $promotion = $this->promotion->getByCode($id); 
         if (!$promotion) {
             $_SESSION['error'] = 'Không tìm thấy mã giảm giá!';
             header('Location: ' . route('staff.promotions.index'));

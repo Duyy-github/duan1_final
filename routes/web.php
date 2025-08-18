@@ -72,6 +72,9 @@ $router->mount('/user', function () use ($router) {
     $router->post('/orders/return/{id}', UserOrderController::class . '@returnOrder');
     $router->post('/orders/delete/{id}', UserOrderController::class . '@delete');
     $router->post('/orders/complete/{id}', UserOrderController::class . '@complete');
+
+    $router->post('/apply-voucher', PaymentController::class . '@applyVoucher');
+
 });
 
 $router->get('/login', AuthController::class . '@showLoginForm');

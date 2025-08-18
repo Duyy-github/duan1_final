@@ -37,14 +37,10 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>
-                        {{-- @if(!empty($product['image']))
-                            <img src="{{ asset($product['image']) }}" alt="Ảnh sản phẩm" width="80">
-                        @else
-                            <span>Không có ảnh</span>
-                        @endif --}}
                         @if ($product['image'])
-                            <img src="{{ $product['image'] }}" alt="{{ $product['product_name'] }}" class="img-thumbnail"
-                                style="max-width: 80px;">
+                            {{-- <img src="{{ $product['image'] }}" alt="{{ $product['product_name'] }}" class="img-thumbnail"
+                                style="max-width: 80px;"> --}}
+                                <img src="{{ file_url($product['image']) }}" alt="{{ $product['product_name'] }}" width="80px">
                         @else
                             <small>No image</small>
                         @endif
