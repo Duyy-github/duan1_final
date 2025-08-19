@@ -14,8 +14,6 @@
             {{-- Ảnh sản phẩm và ảnh nhỏ --}}
             <div class="col-md-5">
                 <div class="mb-3 text-center">
-                    {{-- <img src="{{ asset($product['image']) }}" class="img-fluid rounded border"
-                        alt="{{ $product['product_name'] }}" style="max-height:320px;object-fit:contain;"> --}}
                     <img src="{{ file_url($product['image']) }}" class="card-img-top" alt="{{ $product['product_name'] }}"
                         style="height: 180px; object-fit: cover;">
                 </div>
@@ -29,17 +27,23 @@
                 <div class="mb-3">
                     <span class="me-3"><strong>Số lượng trong kho:</strong> {{ $product['quantity'] }}</span>
                 </div>
-                <form action="{{ route('user/cart/add/' . $product['product_id']) }}" method="POST" class="mb-3">
-                    @csrf
-                    <div class="mb-3 d-flex align-items-center">
-                        <label for="quantity" class="form-label me-2 mb-0"><strong>Số lượng:</strong></label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1"
-                            style="width:80px;">
-                    </div>
-                    <button type="submit" class="btn btn-success px-5 py-2 fs-5">
-                        <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
-                    </button>
-                </form>
+
+                @if ($product['quantity'] > 0)
+                    <form action="{{ route('user/cart/add/' . $product['product_id']) }}" method="POST" class="mb-3">
+                        @csrf
+                        <div class="mb-3 d-flex align-items-center">
+                            <label for="quantity" class="form-label me-2 mb-0"><strong>Số lượng:</strong></label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1"
+                                max="{{ $product['quantity'] }}" style="width:80px;">
+                        </div>
+                        <button type="submit" class="btn btn-success px-5 py-2 fs-5">
+                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
+                        </button>
+                    </form>
+                @else
+                    <div class="alert alert-danger fw-bold fs-5">Sản phẩm đã hết hàng</div>
+                @endif
+
             </div>
         </div>
 
@@ -79,27 +83,30 @@
         </div>
     </div>
 @endsection
+
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const quantityInput = document.getElementById('quantity');
             const maxQuantity = {{ $product['quantity'] }};
-            const form = quantityInput.closest('form');
+            const form = quantityInput?.closest('form');
 
-            form.addEventListener('submit', function (e) {
-                const value = parseInt(quantityInput.value);
-                if (value > maxQuantity) {
-                    alert('Số lượng trong kho không đủ!');
-                    e.preventDefault();
-                }
-            });
+            if (form && quantityInput) {
+                form.addEventListener('submit', function (e) {
+                    const value = parseInt(quantityInput.value);
+                    if (value > maxQuantity) {
+                        alert('Số lượng trong kho không đủ!');
+                        e.preventDefault();
+                    }
+                });
 
-            quantityInput.addEventListener('input', function () {
-                if (parseInt(this.value) > maxQuantity) {
-                    this.value = maxQuantity;
-                    alert('Số lượng trong kho không đủ!');
-                }
-            });
+                quantityInput.addEventListener('input', function () {
+                    if (parseInt(this.value) > maxQuantity) {
+                        this.value = maxQuantity;
+                        alert('Số lượng trong kho không đủ!');
+                    }
+                });
+            }
         });
     </script>
 @endpush

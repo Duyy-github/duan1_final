@@ -12,7 +12,7 @@
 
     {{-- Hero Section --}}
     <section class="text-center py-5 mb-5 bg-light rounded shadow-sm"
-        style="background: url('{{ asset('images/banner.jpg') }}') center/cover no-repeat;">
+        style="background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;">
         <div class="container text-white" style="background-color: rgba(0,0,0,0.5); padding: 50px; border-radius: 10px;">
             <h1 class="display-4 fw-bold">Khám phá thế giới công nghệ</h1>
             <p class="lead">Những sản phẩm mới nhất, hiện đại nhất đang chờ bạn.</p>

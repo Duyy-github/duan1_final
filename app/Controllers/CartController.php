@@ -58,7 +58,21 @@ class CartController extends Controller
                 'category_name' => $product['category_name'] ?? null,
             ];
         }
-        $_SESSION['cart'][$id]['quantity'] += $quantity;
+
+        // Kiểm tra số lượng cộng dồn không vượt quá tồn kho
+        $currentQty = $_SESSION['cart'][$id]['quantity'];
+        $newQty = $currentQty + $quantity;
+
+        if ($newQty > $product['quantity']) {
+            $_SESSION['error'] = "Sản phẩm '{$product['product_name']}' chỉ còn {$product['quantity']} sản phẩm trong kho!";
+            // Giữ nguyên số lượng hiện tại trong giỏ, không cộng thêm
+            header('Location: ' . route('user/products/show/' . $id));
+            exit;
+        }
+
+        // Nếu đủ hàng thì mới cộng
+        $_SESSION['cart'][$id]['quantity'] = $newQty;
+        // $_SESSION['cart'][$id]['quantity'] += $quantity;
 
         // Thêm thông báo vào session
         $_SESSION['success'] = 'Đã thêm sản phẩm vào giỏ hàng!';

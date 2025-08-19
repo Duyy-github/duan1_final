@@ -75,7 +75,7 @@
  'processing' => 'Đang xử lý',
  'delivering' => 'Đang giao',
  'delivered' => 'Đã giao',
- 'completed' => 'Đã hoàn thành',
+ // 'completed' => 'Đã hoàn thành',
  'cancelled' => 'Đã hủy',
  // 'returned' => 'Hoàn hàng',
  ];

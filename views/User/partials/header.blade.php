@@ -1,7 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="{{ route('user') }}">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height:40px;" class="me-2">
+            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712100.png" alt="Logo AI" style="height:40px;"
+                class="me-2">
+
             Trang chủ
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -12,23 +14,26 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         Danh mục
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
                         {{-- @foreach($categories as $category)
-                            <li>
-                                <a class="dropdown-item" href="{{ route('user/products', ['category' => $category['category_id']]) }}">
-                                    {{ $category['category_name'] }}
-                                </a>
-                            </li>
+                        <li>
+                            <a class="dropdown-item"
+                                href="{{ route('user/products', ['category' => $category['category_id']]) }}">
+                                {{ $category['category_name'] }}
+                            </a>
+                        </li>
                         @endforeach --}}
                     </ul>
                 </li>
             </ul>
 
             <form class="d-flex me-3" action="{{ route('user/products') }}" method="GET">
-                <input class="form-control me-2" type="search" name="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
+                <input class="form-control me-2" type="search" name="search" placeholder="Tìm kiếm sản phẩm..."
+                    aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Tìm</button>
             </form>
 
